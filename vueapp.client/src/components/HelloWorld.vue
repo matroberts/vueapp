@@ -21,29 +21,37 @@
                 </tbody>
             </table>
         </div>
+
+        <div v-if="error">
+          <div v-for="message in error.errors" :key="error.errors.key">
+            {{message[0]}}
+          </div>
+        </div>
     </div>
 </template>
 
 <script lang="ts">
     import { defineComponent } from 'vue';
 
-    type Forecasts = {
-        date: string,
-        temperatureC: string,
-        temperatureF: string,
-        summary: string
-    }[];
+    type RestError = {
+        status: number,
+        errors: {
+            [key:string]: Array<string>
+        }
+    };
 
     interface Data {
         loading: boolean,
-        post: Array<number>
-    }
+        post: null | Array<number>,
+        error: null | RestError,
+    };
 
     export default defineComponent({
         data(): Data {
             return {
                 loading: false,
-                post: null
+                post: null,
+                error: null,
             };
         },
         async created() {
@@ -58,27 +66,18 @@
         methods: {
             async fetchData() {
                 this.post = null;
+                this.error = null;
                 this.loading = true;
 
                 var response = await fetch('rankedsearch');
-
-                console.log('responseok', response.ok);
-
-
                 if (response.ok) {
-
-                  let error = await response.text();
-                  console.log('error', error);
                     this.post = await response.json();
-                    this.loading = false;
+                    console.log('success', this.post);
                 }else{
-                  let error = await response.text();
-
-
-                  //let error = await response.json();
-                  console.log('error', error);
-                  this.loading = false;
+                    this.error = await response.json();
+                    console.log('error', this.error);
                 }
+                this.loading = false;
             }
         },
     });
