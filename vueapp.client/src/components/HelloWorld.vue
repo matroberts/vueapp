@@ -15,7 +15,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="num in post" :key="forecast.date">
+                    <tr v-for="num in post" :key="post">
                         <td>{{ num }}</td>
                     </tr>
                 </tbody>
@@ -69,7 +69,7 @@
                 this.error = null;
                 this.loading = true;
 
-                var response = await fetch('rankedsearch');
+                var response = await fetch('rankedsearch?searchterm=land+registry+search&rankurl=http://www.infotrack.co.uk');
                 if (response.ok) {
                     this.post = await response.json();
                     console.log('success', this.post);
