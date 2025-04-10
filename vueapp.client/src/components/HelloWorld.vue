@@ -11,18 +11,12 @@
             <table>
                 <thead>
                     <tr>
-                        <th>Date</th>
-                        <th>Temp. (C)</th>
-                        <th>Temp. (F)</th>
-                        <th>Summary</th>
+                        <th>Rank</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="forecast in post" :key="forecast.date">
-                        <td>{{ forecast.date }}</td>
-                        <td>{{ forecast.temperatureC }}</td>
-                        <td>{{ forecast.temperatureF }}</td>
-                        <td>{{ forecast.summary }}</td>
+                    <tr v-for="num in post" :key="forecast.date">
+                        <td>{{ num }}</td>
                     </tr>
                 </tbody>
             </table>
@@ -42,7 +36,7 @@
 
     interface Data {
         loading: boolean,
-        post: null | Forecasts
+        post: Array<number>
     }
 
     export default defineComponent({
@@ -66,10 +60,24 @@
                 this.post = null;
                 this.loading = true;
 
-                var response = await fetch('weatherforecast');
+                var response = await fetch('rankedsearch');
+
+                console.log('responseok', response.ok);
+
+
                 if (response.ok) {
+
+                  let error = await response.text();
+                  console.log('error', error);
                     this.post = await response.json();
                     this.loading = false;
+                }else{
+                  let error = await response.text();
+
+
+                  //let error = await response.json();
+                  console.log('error', error);
+                  this.loading = false;
                 }
             }
         },
