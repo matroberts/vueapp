@@ -20,7 +20,7 @@
     </div>
 
     <div v-if="error">
-      <div v-for="message in error.errors" :key="error.errors.key">
+      <div v-for="message in error.errors" :key="message">
         {{message[0]}}
       </div>
     </div>
@@ -61,7 +61,7 @@
                 this.error = null;
                 this.loading = true;
 
-                var response = await fetch(`rankedsearch?searchterm=${this.searchTerm}&rankurl=${this.rankUrl}`);
+                const response = await fetch(`rankedsearch?searchterm=${this.searchTerm}&rankurl=${this.rankUrl}`);
                 if (response.ok) {
                     this.post = await response.json();
                     console.log('success', this.post);
