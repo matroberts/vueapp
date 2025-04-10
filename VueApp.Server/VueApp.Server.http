@@ -4,3 +4,11 @@ GET {{VueApp.Server_HostAddress}}/weatherforecast/
 Accept: application/json
 
 ###
+
+GET {{VueApp.Server_HostAddress}}/rankedsearch/
+Accept: application/json
+
+###
+
+GET {{VueApp.Server_HostAddress}}/rankedsearch?searchterm=land+registry+search&rankurl=http://www.infotrack.co.uk
+Accept: application/json
