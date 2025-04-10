@@ -1,33 +1,30 @@
 <template>
-    <div>
-        <h1>Ranked Search</h1>
-        <p>Enter a search phrase and a url to rank</p>
-
-        <div v-if="loading">
-            Loading... 
-        </div>
-
-        <div v-if="post">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Rank</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="num in post" :key="post">
-                        <td>{{ num }}</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <div v-if="error">
-          <div v-for="message in error.errors" :key="error.errors.key">
-            {{message[0]}}
-          </div>
-        </div>
+  <div>
+    <h1>Ranked Search</h1>
+    <div class="form-group">
+      <label for="search-term">Search:</label>
+      <input type="text" class="form-control" id="search-term" aria-describedby="emailHelp" placeholder="Enter a phrase to search" v-model="searchTerm">
     </div>
+    <div class="form-group mt-2">
+      <label for="exampleInputPassword1">Rank Url:</label>
+      <input type="text" class="form-control" id="rank-url" placeholder="Enter a Url to rank" v-model="rankUrl">
+    </div>
+    <button type="button" class="btn btn-primary mt-2" @click="fetchData">Search</button>
+
+    <div v-if="loading">
+      Loading...
+    </div>
+
+    <div v-if="post" class="mt-3">
+      <p>Rank: {{post}}</p>
+    </div>
+
+    <div v-if="error">
+      <div v-for="message in error.errors" :key="error.errors.key">
+        {{message[0]}}
+      </div>
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
@@ -52,16 +49,11 @@
                 loading: false,
                 post: null,
                 error: null,
+                searchTerm: '',
+                rankUrl: '',
             };
         },
         async created() {
-            // fetch the data when the view is created and the data is
-            // already being observed
-            await this.fetchData();
-        },
-        watch: {
-            // call again the method if the route changes
-            '$route': 'fetchData'
         },
         methods: {
             async fetchData() {
@@ -69,7 +61,7 @@
                 this.error = null;
                 this.loading = true;
 
-                var response = await fetch('rankedsearch?searchterm=land+registry+search&rankurl=http://www.infotrack.co.uk');
+                var response = await fetch(`rankedsearch?searchterm=${this.searchTerm}&rankurl=${this.rankUrl}`);
                 if (response.ok) {
                     this.post = await response.json();
                     console.log('success', this.post);
