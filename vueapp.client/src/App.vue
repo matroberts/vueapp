@@ -1,15 +1,13 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
+import RankedSearch from './components/RankedSearch.vue'
 </script>
 
 <template>
   <header>
     <div class="container">
-      <HelloWorld msg="You did it!" />
+      <RankedSearch />
     </div>
   </header>
-
-
 </template>
 
 <style scoped>
