@@ -19,6 +19,7 @@ public class RankedSearchController : ControllerBase
     [HttpGet(Name = "GetRankedSearch")]
     public async Task<RankedSearchResult> Get(string searchTerm, string rankUrl)
     {
+        // TODO handle errors from the service layer, and return 400 and content of the error
         return await _rankedSearchService.FindSearchResults(searchTerm, rankUrl);
     }
 }

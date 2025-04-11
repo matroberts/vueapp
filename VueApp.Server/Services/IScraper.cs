@@ -13,8 +13,13 @@ public class BingScraper(IWebSearch searcher) : IScraper
     // However test seems to suggest not using 3rd party tools, so here we are
     public async Task<List<string>> ScrapeLinks(string searchTerm)
     {
+        // TODO There is more to do here.
+        // I've seen data with a <strong> tag in it, and a stray <cite>
+        // Either there is a better element to pick out like an href, or more cleaning is required on the links
+
         var searchResult = await searcher.Search(searchTerm);
         var result = new List<string>();
+
         // Find the result <div class="b_attribution"
         foreach (Match match in Regex.Matches(searchResult, "<div class=\"b_attribution\".*?</div>", RegexOptions.None, TimeSpan.FromSeconds(1)))
         {
