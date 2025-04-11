@@ -18,7 +18,7 @@ public class RankedSearchServiceTests
         var result = await service.FindSearchResults("search query", "http://example.com");
 
         // Assert
-        Assert.That(result, Is.EqualTo(new []{0}));
+        Assert.That(result.Ranks, Is.EqualTo(new []{0}));
     }
 
     [Test]
@@ -33,7 +33,7 @@ public class RankedSearchServiceTests
         var result = await service.FindSearchResults("search query", "http://example.com");
 
         // Assert
-        Assert.That(result, Is.EqualTo(new[] { 1 }));
+        Assert.That(result.Ranks, Is.EqualTo(new[] { 1 }));
     }
 
     [Test]
@@ -48,9 +48,8 @@ public class RankedSearchServiceTests
         var result = await service.FindSearchResults("search query", "http://example.com");
 
         // Assert
-        Assert.That(result, Is.EqualTo(new[] { 2, 4 }));
+        Assert.That(result.Ranks, Is.EqualTo(new[] { 2, 4 }));
     }
 
-    // TODO...trim the url
-    // TODO...contains
+
 }

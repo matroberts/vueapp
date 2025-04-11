@@ -17,7 +17,7 @@ public class RankedSearchController : ControllerBase
     }
 
     [HttpGet(Name = "GetRankedSearch")]
-    public async Task<List<int>> Get(string searchTerm, string rankUrl)
+    public async Task<RankedSearchResult> Get(string searchTerm, string rankUrl)
     {
         return await _rankedSearchService.FindSearchResults(searchTerm, rankUrl);
     }

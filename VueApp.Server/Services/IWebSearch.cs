@@ -31,6 +31,9 @@ public class GoogleSearch : IWebSearch
 
 public class BingSearch : IWebSearch
 {
+    // TODO this is a bit crude, but is OK...would be better to use HttpClientFactory
+    // https://www.aspnetmonsters.com/2016/08/2016-08-27-httpclientwrong/
+    // https://learn.microsoft.com/en-us/dotnet/architecture/microservices/implement-resilient-applications/use-httpclientfactory-to-implement-resilient-http-requests
     private static HttpClient _httpClient = new()
     {
         BaseAddress = new Uri("https://www.bing.com/"),
@@ -39,6 +42,7 @@ public class BingSearch : IWebSearch
     public async Task<string> Search(string searchTerm)
     {
         // TODO: How set number of search results?
+        // Need to set a cookie, then can get up to 50 results
         // https://stackoverflow.com/questions/41523186/how-to-set-the-number-of-bing-search-result-page-to-50-in-cookie
 
         // TODO: Handle failure

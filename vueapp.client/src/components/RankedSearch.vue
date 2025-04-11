@@ -16,7 +16,8 @@
     </div>
 
     <div v-if="post" class="mt-3">
-      <p>Rank: {{post}}</p>
+      <p>Rank: {{post.ranks}}</p>
+      <p>Links: {{post.links}}</p>
     </div>
 
     <div v-if="error">
@@ -37,10 +38,17 @@
         }
     };
 
+    type RankedSearchResult = {
+        ranks: Array<number>,
+        links: Array<string>,
+    };
+
     interface Data {
         loading: boolean,
-        post: null | Array<number>,
+        result: null | RankedSearchResult,
         error: null | RestError,
+        searchTerm: string,
+        rankUrl: string,
     };
 
     export default defineComponent({
